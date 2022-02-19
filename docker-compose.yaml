@@ -28,20 +28,6 @@ services:
       - "traefik.http.routers.resume_root.tls.certresolver=myresolver"
 
 
-
-  resume:
-    build: ./resume
-    networks:
-      - proxy
-    labels:
-      - "traefik.http.routers.final_resume.rule=Host(`${DOMAIN}`)"
-      - "traefik.http.routers.final_resume.entrypoints=web,websecure"
-      - "traefik.enable=true"
-      - "traefik.http.routers.final_resume.tls=true"
-      - "traefik.http.services.final_resume.loadbalancer.server.port=80"
-      - "traefik.http.routers.final_resume.tls.certresolver=myresolver"
-
-
   traefik:
     image: "traefik:v2.6"
     

@@ -20,5 +20,3 @@ I fell in love with Python because of it's idiomatic and simple approach, yet, a
     - Type hints
     - Projet templating
     - How to create good documentations
-
-

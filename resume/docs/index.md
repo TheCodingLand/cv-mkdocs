@@ -1,8 +1,11 @@
 
 
 
-???- Inline end info "Basic Information"
+???+ Inline end info "Basic Information"
     ### LE BOURG Julien
+    
+    ![me](./images/julien.jpg)
+
     - **Nationality**: French <BR/>
     - **Email**: julien.lebourg8@gmail.com <BR/>
     - **Phone**: +33 6 22 44 23 96 <BR/><BR/>
@@ -29,4 +32,3 @@ Life long learner, I love technology:
 - [devops](devops.md)
 - [machine learning](ai.md)
 - crypto
-
