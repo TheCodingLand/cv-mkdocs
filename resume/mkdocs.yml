@@ -1,0 +1,94 @@
+site_name: "Resume: Julien Le Bourg"
+site_description: "My developer resume"
+
+site_url: https://julien.tech
+copyright: Julien Le Bourg
+theme:
+  name: material
+  palette:
+  - scheme: dracula
+    primary: deep purple
+    accent: deep purple
+    toggle:
+      icon: material/lightbulb
+      name: Switch to dark mode
+  - scheme: slate
+    primary: deep purple
+    accent: deep purple
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+  - search.suggest
+  - search.highlight
+  - content.tabs.link
+  - navigation.indexes
+  - navigation.instant
+  icon:
+    repo: fontawesome/brands/github-alt
+  logo: 
+  favicon: 
+  language: en
+  
+repo_name: TheCodingLand
+repo_url: https://github.com/thecodingland
+edit_uri: ''
+nav:
+  - Intro: index.md  
+  - education.md
+  - career.md
+  - Python Skills and Libraries: 
+    - python/index.md
+    - Libraries and frameworks: python/frameworks.md
+    - Projects: python/projects.md
+  - automation.md    
+  - devops.md    
+  - ai.md 
+  - About me: me.md
+
+
+markdown_extensions:
+- pymdownx.emoji:
+    emoji_index: !!python/name:materialx.emoji.twemoji
+    emoji_generator: !!python/name:materialx.emoji.to_svg
+- pymdownx.details:
+- pymdownx.tasklist:
+    custom_checkbox: true
+- pymdownx.tabbed:
+    alternate_style: true 
+- toc:
+    permalink: true
+- markdown.extensions.codehilite:
+    guess_lang: false
+- admonition
+- codehilite
+- extra
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format ''
+- pymdownx.tabbed:
+    alternate_style: true
+- mdx_include
+
+extra:
+  generator: false
+  social:
+  - icon: fontawesome/brands/github-alt
+    link: https://github.com/thecodingland
+  - icon: fontawesome/brands/linkedin
+    link: https://www.linkedin.com/in/julien-le-bourg-184a6a9/
+  - icon: fontawesome/solid/globe
+    link: https://julien.tech
+
+extra_css:
+  - css/termynal.css
+  - css/custom.css
+
+extra_javascript:
+  - js/termynal.js
+  - js/custom.js

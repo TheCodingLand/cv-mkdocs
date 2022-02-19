@@ -1,0 +1,87 @@
+
+---
+version: '3'
+services:
+  resume_base:
+    build: ./resume
+    networks:
+      - proxy
+    labels:
+      - "traefik.http.routers.resume_base.rule=Host(`resume.${DOMAIN}`)"
+      - "traefik.http.routers.resume_base.entrypoints=web,websecure"
+      - "traefik.enable=true"
+      - "traefik.http.routers.resume_base.tls=true"
+      - "traefik.http.services.resume_base.loadbalancer.server.port=80"
+      - "traefik.http.routers.resume_base.tls.certresolver=myresolver"
+
+
+  resume_root:
+    build: ./resume
+    networks:
+      - proxy
+    labels:
+      - "traefik.http.routers.resume_root.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.resume_root.entrypoints=web,websecure"
+      - "traefik.enable=true"
+      - "traefik.http.routers.resume_root.tls=true"
+      - "traefik.http.services.resume_root.loadbalancer.server.port=80"
+      - "traefik.http.routers.resume_root.tls.certresolver=myresolver"
+
+
+
+  resume:
+    build: ./resume
+    networks:
+      - proxy
+    labels:
+      - "traefik.http.routers.final_resume.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.final_resume.entrypoints=web,websecure"
+      - "traefik.enable=true"
+      - "traefik.http.routers.final_resume.tls=true"
+      - "traefik.http.services.final_resume.loadbalancer.server.port=80"
+      - "traefik.http.routers.final_resume.tls.certresolver=myresolver"
+
+
+  traefik:
+    image: "traefik:v2.6"
+    
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.address=:80"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=julien.lebourg8@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+
+    labels:
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)"
+      - "traefik.http.routers.traefik.entrypoints=web,websecure"
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+      
+      ## HTTP REDIRECT
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.redirect-https.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.redirect-https.entrypoints=web"
+      - "traefik.http.routers.redirect-https.middlewares=redirect-to-https"
+      
+    ports:
+      - "443:443"
+      - "80:80"
+      - "8082:8080"
+    volumes:
+      - "./traefik/volumes/traefik/letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks: 
+      - proxy
+
+networks: 
+  proxy:
+    external: true
